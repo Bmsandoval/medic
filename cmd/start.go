@@ -41,7 +41,7 @@ func KubeStart(_ *cobra.Command, _ []string) {
 		return
 	}
 	// Delete a Pod
-	startCmd := bash.KubeStart(configs.MinikubeConfig.FilePath)
+	startCmd := bash.KubeStart(filePath)
 	if err := utils.Exec(startCmd); err != nil {
 		fmt.Println(err.Error())
 	}
