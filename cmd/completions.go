@@ -13,10 +13,26 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-package main
+package cmd
 
-import "medic/cmd"
+import (
+	"fmt"
+	"github.com/spf13/cobra"
+	"os"
+)
 
-func main() {
-  cmd.Execute()
+var completionsCmd = &cobra.Command{
+	Use:   "completions",
+	Aliases: []string{"cmplt"},
+	Short: "Generate bash completions",
+	Long: ``,
+	Run: func(cmd *cobra.Command, args []string) {
+		if err := rootCmd.GenBashCompletion(os.Stdout); err != nil {
+			fmt.Println(err.Error())
+		}
+	},
+}
+
+func init() {
+	rootCmd.AddCommand(completionsCmd)
 }

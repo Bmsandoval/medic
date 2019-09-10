@@ -7,11 +7,12 @@ var (
 	KubeListCtxtsByName    = "kubectl config get-contexts -o name"
 	KubeListReleasesByName = "helm ls -q"
 	KubeGetCurrentContext  = "kubectl config current-context"
-	KubeStart = ". ~/projects/k8s-cluster-management/scripts/minikube.sh"
+	//KubeStart = ". ~/projects/k8s-cluster-management/scripts/minikube.sh"
 	KubeStop = "minikube stop"
 )
 
 // Kubernetes
+func KubeStart(filePath string) string { return fmt.Sprintf(". %s", filePath) }
 func KubePortForward(pod string, ports string) string { return fmt.Sprintf("kubectl port-forward %s %s", pod, ports) }
 func KubeTailLogs(pod string) string { return fmt.Sprintf("kubectl logs %s -f", pod) }
 func KubeDeletePod(pod string) string { return fmt.Sprintf("kubectl delete pod %s", pod) }

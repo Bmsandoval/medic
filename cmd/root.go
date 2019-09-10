@@ -17,9 +17,9 @@ package cmd
 
 import (
   "fmt"
-  homedir "github.com/mitchellh/go-homedir"
+  "github.com/mitchellh/go-homedir"
   "github.com/spf13/cobra"
-  "github.com/spf13/viper"
+  "medic/config"
   "os"
 )
 
@@ -58,7 +58,7 @@ func init() {
   // Cobra supports persistent flags, which, if defined here,
   // will be global for your application.
 
-  rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.koda.yaml)")
+  rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.medic.yaml)")
 
 
   // Cobra also supports local flags, which will only run
@@ -69,27 +69,37 @@ func init() {
 
 // initConfig reads in config file and ENV variables if set.
 func initConfig() {
-  if cfgFile != "" {
-    // Use config file from the flag.
-    viper.SetConfigFile(cfgFile)
-  } else {
-    // Find home directory.
+  // Get the config file path
+  if cfgFile == "" {
+    // if not provided, use the home directory
     home, err := homedir.Dir()
     if err != nil {
       fmt.Println(err)
       os.Exit(1)
     }
 
-    // Search config in home directory with name ".koda" (without extension).
-    viper.AddConfigPath(home)
-    viper.SetConfigName(".koda")
+    cfgFile = home + "/.medic.yaml"
   }
 
-  viper.AutomaticEnv() // read in environment variables that match
-
-  // If a config file is found, read it in.
-  if err := viper.ReadInConfig(); err == nil {
-    fmt.Println("Using config file:", viper.ConfigFileUsed())
+  // If the config file doesn't exist, create it
+  if _, err := os.Stat(cfgFile); os.IsNotExist(err) {
+    fmt.Println("Required config not found at:", cfgFile)
+    fmt.Println("Creating initial file:", cfgFile)
+  	if err := config.GenerateSampleConfigYaml(cfgFile); err != nil {
+      fmt.Println(err.Error())
+      panic("error creating the missing config file")
+    }
   }
+
+  // Once we know the config file exists, load it in
+  var conf *config.Configurations
+  conf, err := config.LoadConfigYaml(cfgFile)
+  if err != nil {
+    fmt.Println(err.Error())
+    panic("error opening file")
+  }
+
+  // Store the config in viper
+  config.StoreConfigInViper(conf)
 }
 

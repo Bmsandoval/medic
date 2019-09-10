@@ -16,10 +16,12 @@ limitations under the License.
 package cmd
 
 import (
-	"medic/bash"
-	"medic/utils"
 	"fmt"
+	"github.com/fatih/color"
 	"github.com/spf13/cobra"
+	"medic/bash"
+	"medic/config"
+	"medic/utils"
 )
 
 var kubeStartCmd = &cobra.Command{
@@ -32,10 +34,20 @@ var kubeStartCmd = &cobra.Command{
 
 
 func KubeStart(_ *cobra.Command, _ []string) {
+	configs := config.GetConfigFromViper()
+	filePath := configs.MinikubeConfig.FilePath
+	if filePath == "" {
+		fmt.Println("Minikube start script's file path not found in config file\n aborting...")
+		return
+	}
 	// Delete a Pod
-	startCmd := bash.KubeStart
+	startCmd := bash.KubeStart(configs.MinikubeConfig.FilePath)
 	if err := utils.Exec(startCmd); err != nil {
 		fmt.Println(err.Error())
+	}
+	success := color.New(color.FgGreen)
+	if _, err := success.Println("SUCCESS"); err != nil {
+		fmt.Println("FAIL")
 	}
 }
 

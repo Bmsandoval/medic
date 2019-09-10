@@ -13,10 +13,25 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-package main
+package cmd
 
-import "medic/cmd"
+import (
+	"fmt"
+	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
+)
 
-func main() {
-  cmd.Execute()
+var testingCmd = &cobra.Command{
+	Use:   "test",
+	Aliases: []string{"tt"},
+	Short: "Test various things and such...",
+	Long: ``,
+	Run: func(cmd *cobra.Command, args []string) {
+		port := viper.GetString("port")
+		fmt.Println(port)
+	},
+}
+
+func init() {
+	rootCmd.AddCommand(testingCmd)
 }
