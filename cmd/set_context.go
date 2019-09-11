@@ -22,6 +22,7 @@ import (
 	"fmt"
 	"github.com/spf13/cobra"
 	"log"
+	"os/exec"
 )
 
 var kubeSetContextCmd = &cobra.Command{
@@ -33,6 +34,12 @@ var kubeSetContextCmd = &cobra.Command{
 }
 
 func KubeSetContext(_ *cobra.Command, _ []string) {
+	// Check for necessary stuff
+	if _, err := exec.LookPath("kubectl"); err != nil {
+		log.Println(err.Error())
+		return
+	}
+
 	// Select a context
 	ctx, err := kube_svc.SelectContext()
 	if err != nil {

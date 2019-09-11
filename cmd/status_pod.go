@@ -16,11 +16,13 @@ limitations under the License.
 package cmd
 
 import (
+	"log"
 	"medic/bash"
 	"medic/services/kube_svc"
 	"medic/utils"
 	"fmt"
 	"github.com/spf13/cobra"
+	"os/exec"
 )
 
 var kubeStatusOfPodCmd = &cobra.Command{
@@ -33,6 +35,12 @@ var kubeStatusOfPodCmd = &cobra.Command{
 
 
 func KubeStatusOfPod(_ *cobra.Command, _ []string) {
+	// Check for necessary stuff
+	if _, err := exec.LookPath("kubectl"); err != nil {
+		log.Println(err.Error())
+		return
+	}
+
 	// Select a pod
 	pod, _ := kube_svc.SelectPod()
 	// StatusOf a Pod

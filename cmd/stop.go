@@ -16,10 +16,12 @@ limitations under the License.
 package cmd
 
 import (
+	"log"
 	"medic/bash"
 	"medic/utils"
 	"fmt"
 	"github.com/spf13/cobra"
+	"os/exec"
 )
 
 var kubeStopCmd = &cobra.Command{
@@ -32,6 +34,12 @@ var kubeStopCmd = &cobra.Command{
 
 
 func KubeStop(_ *cobra.Command, _ []string) {
+	// Check for necessary stuff
+	if _, err := exec.LookPath("kubectl"); err != nil {
+		log.Println(err.Error())
+		return
+	}
+
 	// Stop minikube
 	stopCmd := bash.KubeStop
 	if err := utils.Exec(stopCmd); err != nil {

@@ -22,6 +22,7 @@ import (
 	"fmt"
 	"github.com/spf13/cobra"
 	"log"
+	"os/exec"
 )
 
 var kubeEventsPodCmd = &cobra.Command{
@@ -34,6 +35,12 @@ var kubeEventsPodCmd = &cobra.Command{
 
 
 func KubeEventsPod(_ *cobra.Command, _ []string) {
+	// Check for necessary stuff
+	if _, err := exec.LookPath("kubectl"); err != nil {
+		log.Println(err.Error())
+		return
+	}
+
 	// Select a pod
 	pod, err := kube_svc.SelectPod()
 	if err != nil {

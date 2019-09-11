@@ -22,6 +22,7 @@ import (
 	"fmt"
 	"github.com/spf13/cobra"
 	"log"
+	"os/exec"
 )
 
 const (
@@ -38,6 +39,12 @@ var forwardPortCmd = &cobra.Command{
 
 
 func ForwardPort(cmd *cobra.Command, _ []string) {
+	// Check for necessary stuff
+	if _, err := exec.LookPath("kubectl"); err != nil {
+		log.Println(err.Error())
+		return
+	}
+
 	// Get flag arguments
 	ports, _:= cmd.Flags().GetString("port")
 	if ports == "" {

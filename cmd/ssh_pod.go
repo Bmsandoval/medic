@@ -22,6 +22,7 @@ import (
 	"fmt"
 	"github.com/spf13/cobra"
 	"log"
+	"os/exec"
 )
 
 var kubeSshPodCmd = &cobra.Command{
@@ -34,6 +35,12 @@ var kubeSshPodCmd = &cobra.Command{
 
 
 func KubeSshPod(_ *cobra.Command, _ []string) {
+	// Check for necessary stuff
+	if _, err := exec.LookPath("kubectl"); err != nil {
+		log.Println(err.Error())
+		return
+	}
+
 	// Select a pod
 	pod, err := kube_svc.SelectPod()
 	if err != nil {

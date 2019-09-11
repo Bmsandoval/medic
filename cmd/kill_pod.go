@@ -22,6 +22,7 @@ import (
 	"fmt"
 	"github.com/spf13/cobra"
 	"log"
+	"os/exec"
 )
 
 var kubeKillPodCmd = &cobra.Command{
@@ -33,6 +34,12 @@ var kubeKillPodCmd = &cobra.Command{
 }
 
 func KubeKillPod(_ *cobra.Command, _ []string) {
+	// Check for necessary stuff
+	if _, err := exec.LookPath("kubectl"); err != nil {
+		log.Println(err.Error())
+		return
+	}
+
 	// Select a pod
 	pod, err := kube_svc.SelectPod()
 	if err != nil {

@@ -21,6 +21,7 @@ import (
 	"medic/utils"
 	"github.com/spf13/cobra"
 	"log"
+	"os/exec"
 )
 
 var helmPurgeCommand = &cobra.Command{
@@ -32,6 +33,12 @@ var helmPurgeCommand = &cobra.Command{
 }
 
 func HelmPurge(_ *cobra.Command, _ []string) {
+	// Check for necessary stuff
+	if _, err := exec.LookPath("kubectl"); err != nil {
+		log.Println(err.Error())
+		return
+	}
+
 	// Select a pod
 	release, err := kube_svc.SelectRelease()
 	if err != nil {

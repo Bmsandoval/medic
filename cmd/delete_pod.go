@@ -16,12 +16,13 @@ limitations under the License.
 package cmd
 
 import (
-	"medic/bash"
-	"medic/services/kube_svc"
-	"medic/utils"
 	"fmt"
 	"github.com/spf13/cobra"
 	"log"
+	"medic/bash"
+	"medic/services/kube_svc"
+	"medic/utils"
+	"os/exec"
 )
 
 var kubeDelPodCmd = &cobra.Command{
@@ -34,14 +35,23 @@ var kubeDelPodCmd = &cobra.Command{
 
 
 func KubeDelPod(_ *cobra.Command, _ []string) {
+	// Check for necessary stuff
+	if _, err := exec.LookPath("kubectl"); err != nil {
+		log.Println(err.Error())
+		return
+	}
+
 	// Select a pod
 	pod, err := kube_svc.SelectPod()
 	if err != nil {
 		log.Println(err.Error())
 		return
 	}
+
 	// Delete a Pod
-delCmd := bash.KubeDeletePod(*pod)
+	delCmd := bash.KubeDeletePod(*pod)
+
+
 	if err := utils.Exec(delCmd); err != nil {
 		fmt.Println(err.Error())
 	}
