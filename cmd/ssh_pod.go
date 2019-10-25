@@ -16,12 +16,11 @@ limitations under the License.
 package cmd
 
 import (
+	"fmt"
+	"github.com/spf13/cobra"
 	"medic/bash"
 	"medic/services/kube_svc"
 	"medic/utils"
-	"fmt"
-	"github.com/spf13/cobra"
-	"log"
 	"os/exec"
 )
 
@@ -37,19 +36,26 @@ var kubeSshPodCmd = &cobra.Command{
 func KubeSshPod(_ *cobra.Command, _ []string) {
 	// Check for necessary stuff
 	if _, err := exec.LookPath("kubectl"); err != nil {
-		log.Println(err.Error())
+		fmt.Println(err.Error())
 		return
 	}
 
 	// Select a pod
 	pod, err := kube_svc.SelectPod()
 	if err != nil {
-		log.Println(err.Error())
+		fmt.Println(err.Error())
 		return
 	}
-	// Delete a Pod
-	sshCmd := bash.KubeSshPod(*pod)
-	if err := utils.Exec(sshCmd); err != nil {
+
+	shell, err := kube_svc.GetChoiceShell(*pod)
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+
+	// SSH into pod
+	cmd, args := bash.KubeSshPod(*pod, shell)
+	if err := utils.ExecNotCapturingOutput(cmd, args); err != nil {
 		fmt.Println(err.Error())
 	}
 }

@@ -16,9 +16,9 @@ limitations under the License.
 package cmd
 
 import (
-	"fmt"
 	"github.com/spf13/cobra"
-	"github.com/spf13/viper"
+	"log"
+	"medic/utils"
 )
 
 var testingCmd = &cobra.Command{
@@ -27,8 +27,12 @@ var testingCmd = &cobra.Command{
 	Short: "Test various things and such...",
 	Long: ``,
 	Run: func(cmd *cobra.Command, args []string) {
-		port := viper.GetString("port")
-		fmt.Println(port)
+		//c := exec.Command("kubectl", "exec", "dev-odin-6777749495-4fv79", "-it", "sh")
+		command := "kubectl"
+		cmdArgs := []string{"exec", "dev-odin-6777749495-4fv79", "-it", "sh"}
+		if err := utils.ExecNotCapturingOutput(command, cmdArgs); err != nil {
+			log.Println(err.Error())
+		}
 	},
 }
 
