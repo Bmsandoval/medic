@@ -1,8 +1,8 @@
 package kube_svc
 
 import (
-	"medic/bash"
-	"medic/utils"
+	"github.com/bmsandoval/medic/bash"
+	"github.com/bmsandoval/medic/utils"
 	"errors"
 	"github.com/ktr0731/go-fuzzyfinder"
 	"strings"

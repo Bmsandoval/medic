@@ -17,8 +17,8 @@ package cmd
 
 import (
 	"log"
-	"medic/bash"
-	"medic/utils"
+	"github.com/bmsandoval/medic/bash"
+	"github.com/bmsandoval/medic/utils"
 	"fmt"
 	"github.com/spf13/cobra"
 	"os/exec"

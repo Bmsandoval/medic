@@ -2,8 +2,8 @@ package kube_svc
 
 import (
 	"errors"
-	"medic/bash"
-	"medic/utils"
+	"github.com/bmsandoval/medic/bash"
+	"github.com/bmsandoval/medic/utils"
 	"strings"
 )
 

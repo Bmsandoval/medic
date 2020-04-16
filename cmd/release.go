@@ -16,8 +16,8 @@ limitations under the License.
 package cmd
 
 import (
-	"medic/bash"
-	"medic/utils"
+	"github.com/bmsandoval/medic/bash"
+	"github.com/bmsandoval/medic/utils"
 	"fmt"
 	"github.com/spf13/cobra"
 	"log"

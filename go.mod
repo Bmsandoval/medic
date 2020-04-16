@@ -1,4 +1,4 @@
-module medic
+module github.com/bmsandoval/medic
 
 go 1.12
 

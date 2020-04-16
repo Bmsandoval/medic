@@ -16,9 +16,9 @@ limitations under the License.
 package cmd
 
 import (
-	"medic/bash"
-	"medic/services/kube_svc"
-	"medic/utils"
+	"github.com/bmsandoval/medic/bash"
+	"github.com/bmsandoval/medic/services/kube_svc"
+	"github.com/bmsandoval/medic/utils"
 	"github.com/spf13/cobra"
 	"log"
 	"os/exec"

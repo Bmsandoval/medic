@@ -18,9 +18,9 @@ package cmd
 import (
 	"fmt"
 	"github.com/spf13/cobra"
-	"medic/bash"
-	"medic/services/kube_svc"
-	"medic/utils"
+	"github.com/bmsandoval/medic/bash"
+	"github.com/bmsandoval/medic/services/kube_svc"
+	"github.com/bmsandoval/medic/utils"
 	"os/exec"
 )
 

@@ -17,7 +17,7 @@ func KubePortForward(pod string, ports string) string { return fmt.Sprintf("kube
 func KubeTailLogs(pod string) string { return fmt.Sprintf("kubectl logs %s -f", pod) }
 func KubeDeletePod(pod string) string { return fmt.Sprintf("kubectl delete pod %s", pod) }
 func KubeSshPod(pod string, shell string) (string, []string) { return "kubectl", []string{"exec", pod, "-it", shell} }
-func KubeKillPod(pod string) string { return fmt.Sprintf("kubectl exec -it %s -- killall main", pod) }
+func KubeKillPod(pod string) string { return fmt.Sprintf("kubectl exec -it %s -- pkill main", pod) }
 func KubeSetContext(context string) string { return fmt.Sprintf("kubectl config use-context %s", context) }
 func KubeDescribePod(pod string) string { return fmt.Sprintf("kubectl describe pod %s", pod) }
 func KubeEventsOfPod(pod string) string { return fmt.Sprintf("kubectl get events | grep %s", pod)}

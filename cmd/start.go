@@ -19,9 +19,9 @@ import (
 	"fmt"
 	"github.com/fatih/color"
 	"github.com/spf13/cobra"
-	"medic/bash"
-	"medic/config"
-	"medic/utils"
+	"github.com/bmsandoval/medic/bash"
+	"github.com/bmsandoval/medic/config"
+	"github.com/bmsandoval/medic/utils"
 )
 
 var kubeStartCmd = &cobra.Command{

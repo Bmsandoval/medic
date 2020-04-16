@@ -15,7 +15,7 @@ limitations under the License.
 */
 package main
 
-import "medic/cmd"
+import "github.com/bmsandoval/medic/cmd"
 
 func main() {
   cmd.Execute()

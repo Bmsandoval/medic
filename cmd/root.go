@@ -19,7 +19,7 @@ import (
   "fmt"
   "github.com/mitchellh/go-homedir"
   "github.com/spf13/cobra"
-  "medic/config"
+  "github.com/bmsandoval/medic/config"
   "os"
 )
 

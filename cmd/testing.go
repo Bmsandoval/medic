@@ -18,7 +18,7 @@ package cmd
 import (
 	"github.com/spf13/cobra"
 	"log"
-	"medic/utils"
+	"github.com/bmsandoval/medic/utils"
 )
 
 var testingCmd = &cobra.Command{
